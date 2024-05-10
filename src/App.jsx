@@ -1,3 +1,4 @@
+import { json } from "express";
 import { nanoid } from "nanoid";
 import { useState } from "react";
 
@@ -30,6 +31,14 @@ const App = () => {
         settasks(copyTasks);
         localStorage.setItem("tasks", JSON.stringify(copyTasks));
     };
+
+    const deleteHandler = (index)=> {
+        console.log(index);
+        const chachi = [...tasks];
+        chachi.splice(index, 1);
+        settasks(chachi);
+        localStorage.setItem('tasks', JSON.stringify(chachi));
+    }
 
     return (
         <div className="overflow-x-hidden border-t-2 w-screen min-h-[100vh] bg-zinc-800 flex  items-center flex-col">
@@ -89,12 +98,13 @@ const App = () => {
                                 </div>
                                 <div className="flex gap-3 text-2xl text-yellow-100">
                                     <i className="ri-file-edit-line"></i>
-                                    <i className="ri-delete-bin-3-line"></i>
+                                    <i onClick={()=> deleteHandler(index)} className="ri-delete-bin-3-line"></i>
                                 </div>
                             </li>
                         );
                     })
-                ) : (
+                )
+                 : (
                     <h1 className="mt-10 w-full text-center text-orange-600 text-3xl">
                         No Pending Tasks
                     </h1>
